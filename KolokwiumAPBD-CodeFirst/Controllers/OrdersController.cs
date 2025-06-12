@@ -7,22 +7,22 @@ namespace KolokwiumAPBD_CodeFirst.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class OrdersController : ControllerBase
+public class RacersController : ControllerBase
 {
     //Tutaj tworzymy endpoint i decydujemy co ma się dziać przy ich obsłudze
     private readonly IDbService _dbService;
 
-    public OrdersController(IDbService dbService)
+    public RacersController(IDbService dbService)
     {
         _dbService = dbService;
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetOrder(int id)
+    [HttpGet("{id}/participations")]
+    public async Task<IActionResult> GetRacersParticipations(int id)
     {
         try
         {
-            var order = await _dbService.GetOrderById(id);
+            var order = await _dbService.GetRacersParticipations(id);
             return Ok(order);
         }
         catch (NotFoundException e)
@@ -30,13 +30,13 @@ public class OrdersController : ControllerBase
             return NotFound();
         }
     }
-
-    [HttpPut("{orderId}/fulfill")]
-    public async Task<IActionResult> FulfillOrder(int orderId, FulfillOrderDto dto)
+    
+    [HttpPut("track-races/participants")]
+    public async Task<IActionResult> AddParticipation(ParticipationsToAddDto dto)
     {
         try
         {
-            await _dbService.FulfillOrder(orderId, dto);
+            await _dbService.AddParticipations(dto);
             return Ok();
         }
         catch (NotFoundException e)
@@ -48,5 +48,4 @@ public class OrdersController : ControllerBase
             return Conflict(e.Message);
         }
     }
-    
 }

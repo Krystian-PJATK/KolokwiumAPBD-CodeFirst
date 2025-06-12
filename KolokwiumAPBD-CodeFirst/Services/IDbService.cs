@@ -6,6 +6,6 @@ public interface IDbService
 {
     //Tutaj daje deklaracje metod, których będzie używał controller,
     //a ich definicje będą w DbService.cs, który dziedziczy ten interfejs
-    Task<OrderDto> GetOrderById(int orderId);
-    Task FulfillOrder(int orderId, FulfillOrderDto dto);
+    Task<RacerParticipationsDto> GetRacersParticipations(int racerId);
+    Task AddParticipations(ParticipationsToAddDto dto);
 }
